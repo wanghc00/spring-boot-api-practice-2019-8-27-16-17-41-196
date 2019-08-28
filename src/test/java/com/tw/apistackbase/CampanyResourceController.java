@@ -47,4 +47,10 @@ public class CampanyResourceController {
         this.mockMvc.perform(get("/companies")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("company001")));
     }
+    
+    @Test
+    public void shouldGetBadRequest() throws Exception {
+        this.mockMvc.perform(get("/companies/008")).andDo(print()).andExpect(status().isNotFound());
+    }
+    
 }
