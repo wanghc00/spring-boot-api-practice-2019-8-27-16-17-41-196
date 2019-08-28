@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
  * 名称：〈一句话功能简述〉<br> 
@@ -51,6 +53,14 @@ public class CampanyResourceController {
     @Test
     public void shouldGetBadRequest() throws Exception {
         this.mockMvc.perform(get("/companies/008")).andDo(print()).andExpect(status().isNotFound());
+    }
+    
+    @Test
+    public void shouldGetIdInBody() throws Exception{
+        this.mockMvc.perform(get("/companies/001"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is("001")));
     }
     
 }
